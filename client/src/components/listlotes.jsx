@@ -30,9 +30,8 @@ const ListLotes = () =>{
         console.log("line 23")
     }, [])
 
-    const deleteLote = async (id) => {
+    /*const deleteLote = async (id) => {
 
-        
         axios({
             method: 'delete',
             params: id,
@@ -42,8 +41,18 @@ const ListLotes = () =>{
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
         }).then((res)=>{ console.log(res.data)
-        })
-    }
+        })  
+    } */
+
+    const deleteLote = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/lotes/${id}`);
+            console.log('Lote deletado com sucesso:', response.data);
+            // Adicione qualquer lógica adicional após a exclusão bem-sucedida, se necessário
+        } catch (error) {
+            console.error('Erro ao deletar o lote:', error);
+        }
+    };
     
 
     return (
@@ -61,9 +70,9 @@ const ListLotes = () =>{
                     {!lote.proprietario ? (<p>Nome do Proprietário: <span>{lote.proprietario}</span></p>): ''}
                 </div>
                 <div className="icons">
-                    <Button variant="danger" onClick={() =>{
-                        deleteLote(lote._id)
-                    }}> <FontAwesomeIcon icon={faTrash} color="#FFF" /></Button>
+                <Button variant="danger" onClick={() => deleteLote(lote._id)}> 
+                    <FontAwesomeIcon icon={faTrash} color="#FFF" />
+                </Button>
                 </div>
             </div>
       ))}
