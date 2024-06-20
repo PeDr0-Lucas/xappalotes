@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { createLote, deleteLote, listAllLotes } from './src/controller/lotesControler.js';
+import { createLote, deleteLote, listAllLotes, editLote } from './src/controller/lotesControler.js';
 import cors from 'cors'
 
 const app = express();
@@ -13,6 +13,7 @@ app.use(cors({
 
 
 app.post('/lotes', cors(), async (req, res) => {
+
   try {
     if(!req.body.area){
       return res.status(400).json({ message: 'A Área é obrigatória' });
@@ -27,9 +28,9 @@ app.post('/lotes', cors(), async (req, res) => {
       req.body.disponibilidade = false
     const savedLote = await createLote(req.body)
   
-    res.status(201).json(savedLote)
+    return res.status(201).json(savedLote)
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
 }
 });
 
@@ -48,11 +49,22 @@ app.delete('/lotes/:id', cors(), async (req, res) => {
   try {
     const deleteCount = await deleteLote(req.params.id)
     console.log(deleteCount)
-    return res.status(200)
+    return res.status(200).json({message:"Excluído Com sucesso"})
   } catch (error) {
     return res.status(500).json({ message: error.message })
   }
 });
+
+app.put('/lotes/:id', cors(), async (req, res) =>{
+  const {id} = req.params;
+  const body = req.body;
+   try {
+        const updatedLote = await editLote(id, body);
+       return res.status(200).json(updatedLote);
+    } catch (error) {
+      return res.status(500).json({ mensagem: 'Erro ao atualizar o lote', erro: error.message });
+    }
+})
 
 
 app.listen(3000, function () {

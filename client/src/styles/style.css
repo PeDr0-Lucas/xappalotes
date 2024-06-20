@@ -70,4 +70,14 @@ form2{
     }
   }
 
+  & .icons {
+    display: flex;
+    flex-direction: column;
+
+    & .btn{
+      margin-bottom: 10px;
+    }
+
+  }
+
 }

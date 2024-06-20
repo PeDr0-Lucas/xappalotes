@@ -2,6 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import ListLotes from '../components/listlotes';
 import ModalCriarLote from '../components/modalCriarLote';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -18,6 +20,7 @@ function App (){
       </Container>
     </Navbar>
     <ListLotes />
+    <ToastContainer/>
     </Container>
   )
 }
